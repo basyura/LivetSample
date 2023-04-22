@@ -4,7 +4,7 @@
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:l="http://schemas.livet-mvvm.net/2011/wpf"
         xmlns:vm="clr-namespace:LivetSample"
-        xmlns:v="clr-namespace:LivetSample"
+        xmlns:bh="clr-namespace:LivetSample.Behaviors"
         Title="MainWindow" Height="350" Width="525">
 
     <Window.DataContext>
@@ -21,6 +21,7 @@
     </i:Interaction.Triggers>
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
             <RowDefinition Height="auto" />
             <RowDefinition Height="auto" />
             <RowDefinition Height="auto" />
@@ -51,6 +52,17 @@
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="Click">
                             <i:InvokeCommandAction Command="{Binding ButtonCommand}"  CommandParameter="OK"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Button>
+            </StackPanel>
+        </TextBlock>
+        <TextBlock Grid.Row="4" Padding="5">
+            <StackPanel Orientation="Horizontal">
+                <Button Content="InvokeAction">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <bh:Execute  Action="HelloAction" ActionParameter="aaaaaaaaaa"/>
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </Button>
