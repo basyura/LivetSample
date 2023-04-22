@@ -1,0 +1,60 @@
+﻿<Window x:Class="LivetSample.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+        xmlns:l="http://schemas.livet-mvvm.net/2011/wpf"
+        xmlns:vm="clr-namespace:LivetSample"
+        xmlns:v="clr-namespace:LivetSample"
+        Title="MainWindow" Height="350" Width="525">
+
+    <Window.DataContext>
+        <vm:MainWindowViewModel />
+    </Window.DataContext>
+    
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="ContentRendered">
+            <l:LivetCallMethodAction MethodTarget="{Binding}" MethodName="Initialize" />
+        </i:EventTrigger>
+        <i:EventTrigger EventName="Closed">
+            <l:DataContextDisposeAction />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Row="0" Text="{Binding Message}" />
+        <TextBlock Grid.Row="1" Padding="5">
+            <StackPanel Orientation="Horizontal">
+                <TextBox Width="50" Text="{Binding Value1, UpdateSourceTrigger=PropertyChanged}"/><TextBlock Text=" + "/>
+                <TextBox Width="50" Text="{Binding Value2, UpdateSourceTrigger=PropertyChanged}" /><TextBlock Text=" = "/>
+                <TextBlock Width="50" Text="{Binding Value3}"/>
+            </StackPanel> 
+        </TextBlock>
+        <TextBlock Grid.Row="2" Padding="5">
+            <StackPanel Orientation="Horizontal">
+                <Button  Content="InvokeMethod">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <l:LivetCallMethodAction  MethodTarget="{Binding}" MethodName="InvokeClick"  MethodParameter="OK"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Button>
+            </StackPanel>
+        </TextBlock>
+        <TextBlock Grid.Row="3" Padding="5">
+            <StackPanel Orientation="Horizontal">
+                <Button Content="ExecuteCommand">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <i:InvokeCommandAction Command="{Binding ButtonCommand}"  CommandParameter="OK"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Button>
+            </StackPanel>
+        </TextBlock>
+    </Grid>
+</Window>

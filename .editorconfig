@@ -1,0 +1,4 @@
+﻿[*.cs]
+
+# IDE0025: プロパティに式本体を使用する
+csharp_style_expression_bodied_properties = false
