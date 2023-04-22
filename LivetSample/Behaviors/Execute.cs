@@ -1,16 +1,24 @@
 ﻿using Livet;
-using System.Reflection;
 using LivetSample.Actions;
-using System.Reflection.Emit;
 using Microsoft.Xaml.Behaviors;
-using System.Threading.Tasks;
 using System;
+using System.Linq;
+using System.Reflection;
+using System.Threading.Tasks;
 using System.Windows;
 
 namespace LivetSample.Behaviors
 {
     public class Execute : TriggerAction<DependencyObject>
     {
+        /// <summary></summary>
+        public string Action { get; set; }
+        /// <summary></summary>
+        public string ActionParameter { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="parameter"></param>
         protected override void Invoke(object parameter)
         {
             var vm = GetViewModel();
@@ -22,43 +30,27 @@ namespace LivetSample.Behaviors
 
             var clsName = BuildClassName(vm);
             var cmd = NewCommand(vm, clsName);
+            if (cmd == null)
+            {
+                MessageBox.Show("Can not createInstance : " + clsName);
+                return;
+            }
 
             InvokeAsync(cmd, parameter).ContinueWith((v) =>
             {
             });
 
         }
-
-        private async Task<bool> InvokeAsync(IActionCommand cmd, object parameter)
-        {
-            object sender = AssociatedObject;
-            return await cmd.Execute(AssociatedObject, parameter as EventArgs, ActionParameter);
-        }
-
-        public string Action { get; set; }
-
-        public string ActionParameter { get; set; }
-        /*
-        public object ActionParameter
-        {
-            get { return GetValue(ActionParameterProperty); }
-            set { SetValue(ActionParameterProperty, value); }
-        }
-        // Using a DependencyProperty as the backing store for MethodParameter.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty ActionParameterProperty =
-            DependencyProperty.Register("ActionParameter", typeof(object), typeof(Execute), new PropertyMetadata(null, OnActionParameterChanged));
-
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private static void OnActionParameterChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
+        /// <param name="cmd"></param>
+        /// <param name="parameter"></param>
+        /// <returns></returns>
+        private async Task<bool> InvokeAsync(IActionCommand cmd, object parameter)
         {
-            var thisReference = (Execute)sender;
-            thisReference.ActionParameter = e.NewValue;
+            return await cmd.Execute(AssociatedObject, parameter as EventArgs, ActionParameter);
         }
-        */
         /// <summary>
         /// 
         /// </summary>
@@ -110,20 +102,26 @@ namespace LivetSample.Behaviors
         /// <returns></returns>
         private IActionCommand NewCommand(ViewModel vm, string clazz)
         {
-            // アセンブリを取得
-            Assembly asm = Assembly.GetAssembly(vm.GetType());
-            // アクションクラスを取得
-            Type type = asm.GetType(clazz);
+            var asm = Assembly.GetAssembly(vm.GetType());
+            var type = asm.GetType(clazz);
             if (type == null)
             {
                 return null;
             }
-            // インスタンス生成
-            IActionCommand action = Activator.CreateInstance(type) as IActionCommand;
-            // 初期化
-            action.Initialize(vm);
+            var vmType = type.BaseType.GetGenericArguments().FirstOrDefault();
+            if (vmType == null)
+            {
+                return null;
+            }
 
-            return action;
+            IActionCommand instance = Activator.CreateInstance(type) as IActionCommand;
+            if (instance == null)
+            {
+                return null;
+            }
+
+            instance.Initialize(vm);
+            return instance;
         }
     }
 }

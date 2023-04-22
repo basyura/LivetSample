@@ -90,7 +90,7 @@
   <ItemGroup>
     <Compile Include="Actions\HelloAction.cs" />
     <Compile Include="Actions\IActionCommand.cs" />
-    <Compile Include="Execute.cs" />
+    <Compile Include="Behaviors\Execute.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>

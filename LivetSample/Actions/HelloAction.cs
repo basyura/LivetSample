@@ -1,14 +1,13 @@
-﻿using Livet;
-using System;
+﻿using System;
 using System.Threading.Tasks;
 
 namespace LivetSample.Actions
 {
-    public class HelloAction : IActionCommand
+    public class HelloAction : IActionCommand<MainWindowViewModel>
     {
         public override Task<bool> Execute(object sender, EventArgs evnt, object parameter)
         {
-            ((MainWindowViewModel)ViewModel).Message = "From HelloAction"; 
+            ViewModel.Message = "From HelloAction"; 
 
             return OK;
         }

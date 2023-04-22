@@ -1,16 +1,32 @@
 ﻿using Livet;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace LivetSample.Actions
 {
-    public abstract class IActionCommand
+
+    public interface IActionCommand
     {
-        /// <summary></summary>
-        private ViewModel _vm;
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="vm"></param>
+        void Initialize(ViewModel vm);
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="evnt"></param>
+        /// <param name="parameter"></param>
+        /// <returns></returns>
+        Task<bool> Execute(object sender, EventArgs evnt, object parameter);
+    }
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    public abstract class IActionCommand<T> : IActionCommand where T : ViewModel
+    {
         /// <summary></summary>
         protected Task<bool> OK => Task.Run(() => true);
         /// <summary>
@@ -19,12 +35,12 @@ namespace LivetSample.Actions
         /// <param name="vm"></param>
         public virtual void Initialize(ViewModel vm)
         {
-            _vm = vm;
+            ViewModel = vm as T;
         }
         /// <summary></summary>
-        protected ViewModel ViewModel
+        protected T ViewModel
         {
-            get { return _vm; }
+            get; set;
         }
         /// <summary>
         /// 
