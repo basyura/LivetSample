@@ -1,10 +1,10 @@
-﻿using Livet;
-using Microsoft.Xaml.Behaviors;
-using System;
+﻿using System;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows;
+using Livet;
+using Microsoft.Xaml.Behaviors;
 
 namespace LivetSample.Behaviors
 {

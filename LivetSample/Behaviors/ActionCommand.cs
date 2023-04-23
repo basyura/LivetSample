@@ -1,6 +1,6 @@
-﻿using Livet;
-using System;
+﻿using System;
 using System.Threading.Tasks;
+using Livet;
 
 namespace LivetSample.Behaviors
 {
@@ -25,7 +25,7 @@ namespace LivetSample.Behaviors
     /// 
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public abstract class IActionCommand<T> : IActionCommand where T : ViewModel
+    public abstract class ActionCommand<T> : IActionCommand where T : ViewModel
     {
         /// <summary></summary>
         protected Task<bool> OK => Task.Run(() => true);
