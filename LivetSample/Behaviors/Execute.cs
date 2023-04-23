@@ -1,5 +1,4 @@
 ﻿using Livet;
-using LivetSample.Actions;
 using Microsoft.Xaml.Behaviors;
 using System;
 using System.Linq;
@@ -57,14 +56,14 @@ namespace LivetSample.Behaviors
         /// <returns></returns>
         private ViewModel GetViewModel()
         {
-            DependencyObject dep = AssociatedObject as DependencyObject;
-            FrameworkElement ele = dep as FrameworkElement;
-            if (ele != null && ele.DataContext is ViewModel)
+            var dep = AssociatedObject;
+            var ele = AssociatedObject as FrameworkElement;
+            if (AssociatedObject is FrameworkElement && ele.DataContext is ViewModel)
             {
                 return ele.DataContext as ViewModel;
             }
 
-            while(dep != null)
+            while (dep != null)
             {
                 dep = LogicalTreeHelper.GetParent(dep);
                 ele = dep as FrameworkElement;
@@ -74,7 +73,7 @@ namespace LivetSample.Behaviors
                 }
             }
 
-            Window window = Window.GetWindow(AssociatedObject);
+            var window = Window.GetWindow(AssociatedObject);
             if (window != null)
             {
                 return window.DataContext as ViewModel;
@@ -114,14 +113,15 @@ namespace LivetSample.Behaviors
                 return null;
             }
 
-            IActionCommand instance = Activator.CreateInstance(type) as IActionCommand;
-            if (instance == null)
+            var cmd = Activator.CreateInstance(type) as IActionCommand;
+            if (cmd == null)
             {
                 return null;
             }
 
-            instance.Initialize(vm);
-            return instance;
+            cmd.Initialize(vm);
+
+            return cmd;
         }
     }
 }

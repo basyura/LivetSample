@@ -2,7 +2,7 @@
 using System;
 using System.Threading.Tasks;
 
-namespace LivetSample.Actions
+namespace LivetSample.Behaviors
 {
 
     public interface IActionCommand
