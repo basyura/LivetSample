@@ -4,12 +4,11 @@ using LivetSample.Behaviors;
 
 namespace LivetSample.Actions
 {
-    public class HelloAction : ActionCommand<MainWindowViewModel>
+    public class Initialize : ActionCommand<MainWindowViewModel>
     {
         public override Task<bool> Execute(object sender, EventArgs evnt, object parameter)
         {
-            ViewModel.Message = "From HelloAction"; 
-
+            ViewModel.Message = "Hello LivetSample.";
             return OK;
         }
     }

@@ -46,5 +46,17 @@ namespace LivetSample.Behaviors
         /// 
         /// </summary>
         public abstract Task<bool> Execute(object sender, EventArgs evnt, object parameter);
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="action"></param>
+        /// <param name="param"></param>
+        protected void ExecuteCommand(string action, string param = null)
+        {
+            var cmd = new Execute();
+            cmd.Action = action;
+            cmd.ActionParameter = param;
+            cmd.Invoke(ViewModel);
+        }
     }
 }

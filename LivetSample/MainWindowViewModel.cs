@@ -8,13 +8,6 @@ namespace LivetSample
         /// <summary>
         /// 
         /// </summary>
-        public void Initialize()
-        {
-            Message = "Hello LivetSample.";
-        }
-        /// <summary>
-        /// 
-        /// </summary>
         private string _Message;
         public string Message
         {

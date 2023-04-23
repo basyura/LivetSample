@@ -13,7 +13,7 @@
     
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="ContentRendered">
-            <l:LivetCallMethodAction MethodTarget="{Binding}" MethodName="Initialize" />
+            <bh:Execute Action="Initialize" />
         </i:EventTrigger>
         <i:EventTrigger EventName="Closed">
             <l:DataContextDisposeAction />
@@ -27,11 +27,36 @@
             <RowDefinition Height="auto" />
             <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
-        <TextBlock Grid.Row="0" Text="{Binding Message}" />
+        <Border>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Grid.Row="0" Text="{Binding Message}" />
+                <TextBlock x:Name="Message2" Grid.Row="0"  />
+            </StackPanel> 
+        </Border>
         <TextBlock Grid.Row="1" Padding="5">
             <StackPanel Orientation="Horizontal">
-                <TextBox Width="50" Text="{Binding Value1, UpdateSourceTrigger=PropertyChanged}"/><TextBlock Text=" + "/>
-                <TextBox Width="50" Text="{Binding Value2, UpdateSourceTrigger=PropertyChanged}" /><TextBlock Text=" = "/>
+                <TextBox Width="50" Text="{Binding Value1, UpdateSourceTrigger=PropertyChanged}">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="GotFocus">
+                            <bh:Execute Action="SelectAllTextGotFocus" />
+                        </i:EventTrigger>
+                        <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
+                            <bh:Execute Action="SelectAllTextButtonDown" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </TextBox>
+                <TextBlock Text=" + "/>
+                <TextBox Width="50" Text="{Binding Value2, UpdateSourceTrigger=PropertyChanged}" >
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="GotFocus">
+                            <bh:Execute Action="SelectAllTextGotFocus" />
+                        </i:EventTrigger>
+                        <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
+                            <bh:Execute Action="SelectAllTextButtonDown" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </TextBox>
+                <TextBlock Text=" = "/>
                 <TextBlock Width="50" Text="{Binding Value3}"/>
             </StackPanel> 
         </TextBlock>
@@ -62,7 +87,7 @@
                 <Button Content="InvokeAction">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="Click">
-                            <bh:Execute  Action="HelloAction" ActionParameter="aaaaaaaaaa"/>
+                            <bh:Execute  Action="Hello" ActionParameter="aaaaaaaaaa"/>
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </Button>
