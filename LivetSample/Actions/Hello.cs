@@ -2,10 +2,11 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Threading.Tasks;
+using LivetSample.Behaviors;
 
 namespace LivetSample.Actions
 {
-    public class Hello : ActionBase
+    public class Hello : ActionCommand<MainWindowViewModel>
     {
         public override Task<bool> Execute(object sender, EventArgs evnt, object parameter)
         {

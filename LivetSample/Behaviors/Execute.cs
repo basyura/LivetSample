@@ -117,16 +117,15 @@ namespace LivetSample.Behaviors
                 return null;
             }
 
-            var vmType = type.BaseType.GetGenericArguments().FirstOrDefault();
-            if (vmType == null)
-            {
-                return null;
-            }
-
             var cmd = Activator.CreateInstance(type) as IActionCommand;
             if (cmd == null)
             {
-                return null;
+                var vmType = type.BaseType.GetGenericArguments().FirstOrDefault();
+                cmd = Activator.CreateInstance(vmType) as IActionCommand;
+                if (cmd == null)
+                {
+                    return null;
+                }
             }
 
             cmd.Initialize(vm);
