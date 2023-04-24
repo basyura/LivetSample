@@ -4,23 +4,6 @@ using Livet;
 
 namespace LivetSample.Behaviors
 {
-
-    public interface IActionCommand
-    {
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="vm"></param>
-        void Initialize(ViewModel vm);
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="evnt"></param>
-        /// <param name="parameter"></param>
-        /// <returns></returns>
-        Task<bool> Execute(object sender, EventArgs evnt, object parameter);
-    }
     /// <summary>
     /// 
     /// </summary>
@@ -38,10 +21,7 @@ namespace LivetSample.Behaviors
             ViewModel = vm as T;
         }
         /// <summary></summary>
-        protected T ViewModel
-        {
-            get; set;
-        }
+        protected T ViewModel { get; set; }
         /// <summary>
         /// 
         /// </summary>
@@ -53,9 +33,11 @@ namespace LivetSample.Behaviors
         /// <param name="param"></param>
         protected void ExecuteCommand(string action, string param = null)
         {
-            var cmd = new Execute();
-            cmd.Action = action;
-            cmd.ActionParameter = param;
+            var cmd = new Execute()
+            {
+                Action = action,
+                ActionParameter = param,
+            };
             cmd.Invoke(ViewModel);
         }
     }

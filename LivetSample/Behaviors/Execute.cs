@@ -116,6 +116,7 @@ namespace LivetSample.Behaviors
             {
                 return null;
             }
+
             var vmType = type.BaseType.GetGenericArguments().FirstOrDefault();
             if (vmType == null)
             {

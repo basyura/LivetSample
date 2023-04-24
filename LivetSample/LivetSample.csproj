@@ -99,6 +99,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Actions\ActionBase.cs" />
     <Compile Include="Actions\AddOne.cs" />
     <Compile Include="Actions\Initialize.cs" />
     <Compile Include="Actions\SelectAllTextButtonDown.cs" />
@@ -112,6 +113,7 @@
     <Compile Include="Actions\Hello.cs" />
     <Compile Include="Behaviors\ActionCommand.cs" />
     <Compile Include="Behaviors\Execute.cs" />
+    <Compile Include="Behaviors\IActionCommand.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
